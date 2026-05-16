@@ -35,4 +35,5 @@ Cabezas de Atención: 4
 Función de Pérdida: Cross Entropy LossOptimizador
 AdamW📊 Dataset Utilizado
 
-El modelo fue entrenado con el IMDb Dataset of 50K Movie Reviews - Spanish extraído mediante kagglehub. El corpus consta de 50.000 reseñas balanceadas (25k positivas / 25k negativas) traducidas al español.
+El modelo fue entrenado con el IMDb Dataset of 50K Movie Reviews - Spanish extraído mediante kagglehub.
+El corpus consta de 50.000 reseñas balanceadas (25k positivas / 25k negativas) traducidas al español.
