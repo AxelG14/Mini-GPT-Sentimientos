@@ -6,21 +6,18 @@ from datos import preparar_datos_imdb, DatasetIMDb # <-- NUEVOS IMPORTS
 from modelo import MiniGPTClasificador
 
 def entrenar_con_datos_reales():
-    # 1. Configuración de Hardware
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"--- Iniciando entrenamiento en: {device} ---")
 
-    # 2. Hiperparámetros optimizados para tu RTX 5060
-    # Aprovechamos la memoria de tu GPU subiendo el batch_size
     vocab_size = 50257
-    emb_dim = 256      # Dimensión de los vectores
-    max_length = 128   # Las reseñas de Amazon son más largas
+    emb_dim = 256      
+    max_length = 128  
     num_classes = 2
-    batch_size = 32    # Tu GPU puede manejar esto fácilmente
-    epochs = 5         # Con datos reales, pocas épocas suelen bastar
+    batch_size = 32    
+    epochs = 5        
     learning_rate = 1e-4
 
-    # 3. Carga y preparación de datos
     df = preparar_datos_imdb(n_ejemplos=20000) 
     full_dataset = DatasetIMDb(df, max_length=max_length)
     
@@ -32,7 +29,7 @@ def entrenar_con_datos_reales():
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_ds, batch_size=batch_size)
 
-    # 4. Inicializar modelo
+    # Inicializar modelo
     modelo = MiniGPTClasificador(vocab_size, emb_dim, max_length, num_classes).to(device)
     criterio = nn.CrossEntropyLoss()
     optimizador = optim.AdamW(modelo.parameters(), lr=learning_rate)
@@ -59,7 +56,7 @@ def entrenar_con_datos_reales():
         # Validación al final de cada época
         evaluar_modelo(modelo, val_loader, device)
 
-    # 6. Guardar el progreso
+    # Guardar el progreso
     torch.save(modelo.state_dict(), "mini_gpt_amazon.pth")
     print("\nModelo guardado como 'mini_gpt_amazon.pth'")
 

@@ -41,7 +41,6 @@ class DatasetIMDb(Dataset):
 def preparar_datos_imdb(n_ejemplos=None):
     print("Descargando/Buscando dataset de IMDb en español vía Kaggle...")
     
-    # Descarga la última versión del dataset
     path = kagglehub.dataset_download("luisdiegofv97/imdb-dataset-of-50k-movie-reviews-spanish")
     print(f"Ruta base del dataset: {path}")
     
@@ -53,11 +52,9 @@ def preparar_datos_imdb(n_ejemplos=None):
     archivo_csv = csv_files[0]
     print(f"Cargando archivo: {archivo_csv}")
     
-    # Leer el CSV con Pandas
     df = pd.read_csv(archivo_csv)
     print(f"Columnas detectadas: {df.columns.tolist()}")
     
-    # Recortar la cantidad de ejemplos si se especifica un límite para pruebas rápidas
     if n_ejemplos:
         df = df.head(n_ejemplos)
         

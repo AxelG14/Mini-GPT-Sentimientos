@@ -4,16 +4,16 @@ import tiktoken
 from modelo import MiniGPTClasificador
 
 def clasificar_texto():
-    # 1. Configuración de hardware
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    # 2. Hiperparámetros (DEBEN ser exactamente los mismos del entrenamiento)
+    # Hiperparámetros (DEBEN ser exactamente los mismos del entrenamiento)
     vocab_size = 50257
     emb_dim = 256
     max_length = 128
     num_classes = 2
     
-    # 3. Instanciar el modelo y cargar los pesos guardados
+    # Instanciar el modelo y cargar los pesos guardados
     print("Cargando el cerebro del Mini-GPT...")
     modelo = MiniGPTClasificador(vocab_size, emb_dim, max_length, num_classes)
     
@@ -38,7 +38,7 @@ def clasificar_texto():
     print("Escribe 'salir' para terminar.")
     print("="*40 + "\n")
     
-    # 5. Bucle interactivo
+    # Bucle interactivo
     while True:
         texto = input("Escribe una reseña o comentario: ")
         
@@ -49,7 +49,6 @@ def clasificar_texto():
         if not texto.strip():
             continue
             
-        # Preprocesamiento idéntico al dataset
         encoded = tokenizer.encode(texto)
         if len(encoded) > max_length:
             encoded = encoded[:max_length]
@@ -70,7 +69,6 @@ def clasificar_texto():
             prob_pos = probabilidades[1].item()
             
             prediccion = "POSITIVO 🟢" if prob_pos > prob_neg else "NEGATIVO 🔴"
-            confianza = max(prob_pos, prob_neg) * 100
             
         print(f"--> Análisis: {prediccion}")
 
